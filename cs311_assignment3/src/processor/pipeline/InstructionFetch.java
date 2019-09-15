@@ -21,11 +21,17 @@ public class InstructionFetch {
 	{
 		if(IF_EnableLatch.isIF_enable())
 		{
-			int currentPC = containingProcessor.getRegisterFile().getProgramCounter();
-			int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
-			IF_OF_Latch.setInstruction(newInstruction);
-			containingProcessor.getRegisterFile().setProgramCounter(currentPC + 1);
-			
+			if(EX_IF_Latch.isBranchTaken){
+				int newInstruction = containingProcessor.getMainMemory().getWord(EX_IF_Latch.newPC);
+				IF_OF_Latch.setInstruction(newInstruction);
+				containingProcessor.getRegisterFile().setProgramCounter(EX_IF_Latch.newPC + 1);
+				EX_IF_Latch.isBranchTaken = false;
+			}else{
+				int currentPC = containingProcessor.getRegisterFile().getProgramCounter();
+				int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
+				IF_OF_Latch.setInstruction(newInstruction);
+				containingProcessor.getRegisterFile().setProgramCounter(currentPC + 1);
+			}
 			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
 		}

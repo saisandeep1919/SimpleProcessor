@@ -3,6 +3,13 @@ package processor.pipeline;
 public class EX_MA_LatchType {
 	
 	boolean MA_enable;
+	int aluResult;
+	boolean isLoad;
+	boolean isStore;
+	int r1;
+	int rI2;
+	int rd;
+	boolean isWb;
 	
 	public EX_MA_LatchType()
 	{

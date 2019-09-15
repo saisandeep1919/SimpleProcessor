@@ -20,9 +20,16 @@ public class RegisterWrite {
 		if(MA_RW_Latch.isRW_enable())
 		{
 			//TODO
-			
-			// if instruction being processed is an end instruction, remember to call Simulator.setSimulationComplete(true);
-			
+
+			int aluResult = MA_RW_Latch.aluResult;
+			int rd = MA_RW_Latch.rd;
+			boolean isWb = MA_RW_Latch.isWb;
+
+			if(isWb){
+				containingProcessor.getRegisterFile().setValue(rd, aluResult);
+			}
+
+
 			MA_RW_Latch.setRW_enable(false);
 			IF_EnableLatch.setIF_enable(true);
 		}
