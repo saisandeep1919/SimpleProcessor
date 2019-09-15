@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1920a77c-4b52-4779-9964-50a439ced2f1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OperandFetch.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OperandFetch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java" beforeDir="false" afterPath="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/generic/Simulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="76" selection-start-line="76" selection-end-line="76" />
+            <state relative-caret-position="-322">
+              <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
               <folding>
                 <element signature="e#2271#2272#0" expanded="true" />
                 <element signature="e#2304#2305#0" expanded="true" />
@@ -28,22 +32,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/Processor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="69" selection-start-line="69" selection-end-line="69" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2095#2096#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/InstructionFetch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
+            <state relative-caret-position="578">
               <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
@@ -52,33 +43,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OperandFetch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
+            <state relative-caret-position="226">
+              <caret line="81" column="5" lean-forward="true" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/memorysystem/MainMemory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
-              <folding>
-                <element signature="e#98#99#0" expanded="true" />
-                <element signature="e#128#129#0" expanded="true" />
-                <element signature="e#195#196#0" expanded="true" />
-                <element signature="e#245#246#0" expanded="true" />
-                <element signature="e#275#276#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="192" column="17" lean-forward="true" selection-start-line="192" selection-start-column="17" selection-end-line="192" selection-end-column="17" />
+            <state relative-caret-position="330">
+              <caret line="187" column="59" selection-start-line="187" selection-start-column="59" selection-end-line="187" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -89,22 +64,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-131">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="385">
+              <caret line="46" column="60" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="9" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="122">
+              <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>main</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,26 +101,26 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/memorysystem/MainMemory.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OF_EX_LatchType.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/InstructionFetch.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_IF_LatchType.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterFile.java" />
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java" />
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java" />
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java" />
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/generic/Simulator.java" />
-        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OperandFetch.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/memorysystem/MainMemory.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/generic/Simulator.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/main/Main.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java" />
         <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java" />
+        <option value="$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="978" />
-    <option name="height" value="1048" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="width" value="1433" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -196,7 +185,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568512747241" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568555690458" />
     <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Desktop/temp/Testing/descending.out" />
     <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
   </component>
@@ -221,7 +210,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="cs311_assignment3" />
-      <option name="PROGRAM_PARAMETERS" value="C:\Users\saisa\OneDrive\Desktop\temp\config.xml C:\Users\saisa\OneDrive\Desktop\temp\output.txt C:\Users\saisa\OneDrive\Desktop\temp\testing/prime.out" />
+      <option name="PROGRAM_PARAMETERS" value="C:\Users\saisa\OneDrive\Desktop\temp\config.xml C:\Users\saisa\OneDrive\Desktop\temp\output.txt C:\Users\saisa\OneDrive\Desktop\temp\testing\evenorodd.out" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="main.*" />
@@ -261,9 +250,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-6" y="0" width="1146" height="830" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22483222" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.3744799" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -273,8 +262,8 @@
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22379604" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.32577905" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29083094" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6289398" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="6" weight="0.3286119" />
@@ -335,7 +324,7 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/InstructionFetch.java</url>
           <line>21</line>
           <properties />
@@ -347,13 +336,7 @@
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java</url>
-          <line>21</line>
-          <properties />
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java</url>
           <line>19</line>
           <properties />
@@ -361,15 +344,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java</url>
-          <line>202</line>
+          <line>211</line>
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java</url>
           <line>19</line>
           <properties />
           <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cs311_assignment3/src/generic/Simulator.java</url>
+          <line>74</line>
+          <properties />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java</url>
+          <line>21</line>
+          <properties />
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -383,6 +378,7 @@
         <watch expression="insString.length()" language="JAVA" />
         <watch expression="subStr.length()" language="JAVA" />
         <watch expression="containingProcessor.getRegisterFile()" language="JAVA" />
+        <watch expression="containingProcessor.getRegisterFile().registerFile" />
       </configuration>
     </watches-manager>
   </component>
@@ -550,74 +546,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#239#240#0" expanded="true" />
-            <element signature="e#267#268#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/Processor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2095#2096#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/memorysystem/MainMemory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#98#99#0" expanded="true" />
-            <element signature="e#128#129#0" expanded="true" />
-            <element signature="e#195#196#0" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#275#276#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-131">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/generic/Simulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        <state relative-caret-position="-322">
+          <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
           <folding>
             <element signature="e#2271#2272#0" expanded="true" />
             <element signature="e#2304#2305#0" expanded="true" />
@@ -625,27 +557,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="24" column="29" lean-forward="true" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/memorysystem/MainMemory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding>
+            <element signature="e#98#99#0" expanded="true" />
+            <element signature="e#128#129#0" expanded="true" />
+            <element signature="e#166#167#0" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#245#246#0" expanded="true" />
+            <element signature="e#275#276#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/Processor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2071#2072#0" expanded="true" />
+            <element signature="e#2095#2096#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/InstructionFetch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
+        <state relative-caret-position="578">
           <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/OperandFetch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        <state relative-caret-position="226">
+          <caret line="81" column="5" lean-forward="true" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/EX_MA_LatchType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/Execute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="192" column="17" lean-forward="true" selection-start-line="192" selection-start-column="17" selection-end-line="192" selection-end-column="17" />
+        <state relative-caret-position="330">
+          <caret line="187" column="59" selection-start-line="187" selection-start-column="59" selection-end-line="187" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MemoryAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="46" column="60" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/MA_RW_LatchType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cs311_assignment3/src/processor/pipeline/RegisterWrite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
         </state>
       </provider>
     </entry>

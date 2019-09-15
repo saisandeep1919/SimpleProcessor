@@ -32,6 +32,8 @@ public class Execute {
 			boolean isStore = false;
 			int aluResult = 0;
 			boolean isWb = false;
+			boolean isSpecialWb = false;
+			int specialAluResult = 0;
 
 			//R2I and jmp
 			if(isImmediate){
@@ -55,7 +57,7 @@ public class Execute {
 					}
 					else if(aluSignal == 27){
 						int temp = containingProcessor.getRegisterFile().getValue(rd);
-						if(r1 > temp){
+						if(r1 < temp){
 							isBranch = true;
 						}else{
 							isBranch = false;
@@ -63,7 +65,7 @@ public class Execute {
 					}
 					else if(aluSignal == 28){
 						int temp = containingProcessor.getRegisterFile().getValue(rd);
-						if(r1 < temp){
+						if(r1 > temp){
 							isBranch = true;
 						}else{
 							isBranch = false;
@@ -121,6 +123,8 @@ public class Execute {
 				//divi
 				else if(aluSignal == 7){
 					aluResult = r1 / rI2;
+					specialAluResult = r1 % rI2;
+					isSpecialWb = true;
 					isWb = true;
 					isBranch = false;
 					isLoad = false;
@@ -165,6 +169,8 @@ public class Execute {
 				//div
 				else if(aluSignal == 6){
 					aluResult = r1 / rI2;
+					isSpecialWb = true;
+					specialAluResult = r1 % rI2;
 					isWb = true;
 					isBranch = false;
 					isLoad = false;
@@ -178,6 +184,9 @@ public class Execute {
 			EX_MA_Latch.setMA_enable(true);
 			EX_MA_Latch.aluResult = aluResult;
 			EX_MA_Latch.isWb = isWb;
+			EX_MA_Latch.isSpecialWb = isSpecialWb;
+			EX_MA_Latch.specialAluResult = specialAluResult;
+
 			if(isLoad && isStore){
 				System.out.println("Error in Execute - Both Load and Store");
 			}else{

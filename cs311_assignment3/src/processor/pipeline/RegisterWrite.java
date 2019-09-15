@@ -24,9 +24,16 @@ public class RegisterWrite {
 			int aluResult = MA_RW_Latch.aluResult;
 			int rd = MA_RW_Latch.rd;
 			boolean isWb = MA_RW_Latch.isWb;
+			boolean isSpecailWb = MA_RW_Latch.isSpecailWb;
+			int specailAluResult = MA_RW_Latch.specailAluResult;
 
 			if(isWb){
 				containingProcessor.getRegisterFile().setValue(rd, aluResult);
+			}
+
+			if(isSpecailWb){
+				containingProcessor.getRegisterFile().setValue(31, specailAluResult);
+				MA_RW_Latch.isSpecailWb = false;
 			}
 
 

@@ -6,6 +6,8 @@ public class MA_RW_LatchType {
 	int aluResult;
 	int rd;
 	boolean isWb;
+	boolean isSpecailWb;
+	int specailAluResult;
 
 	public MA_RW_LatchType()
 	{

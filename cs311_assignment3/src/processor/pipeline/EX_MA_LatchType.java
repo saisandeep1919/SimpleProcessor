@@ -10,6 +10,8 @@ public class EX_MA_LatchType {
 	int rI2;
 	int rd;
 	boolean isWb;
+	boolean isSpecialWb;
+	int specialAluResult;
 	
 	public EX_MA_LatchType()
 	{
