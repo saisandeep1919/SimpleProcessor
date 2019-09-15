@@ -1,5 +1,7 @@
 package generic;
 
+import com.sun.org.glassfish.external.statistics.Statistic;
+import jdk.internal.dynalink.beans.StaticClass;
 import processor.Clock;
 import processor.Processor;
 
@@ -72,22 +74,41 @@ public class Simulator {
 	
 	public static void simulate()
 	{
+		Statistics.setNumberOfCycles(0);
+		int pc = 0;
+		int insInt = 0;
+		String insString = "";
+		int cycle = 0;
 		while(simulationComplete == false)
 		{
+			Statistics.incrementCycles();
 			processor.getIFUnit().performIF();
+			pc = processor.getRegisterFile().getProgramCounter() - 1;
+			insInt = processor.getMainMemory().getWord(pc);
+			insString = Integer.toBinaryString(insInt);
+			cycle = Statistics.numberOfCycles;
+			Statistics.newStatHolder(pc, insInt, insString, cycle);
 			Clock.incrementClock();
+			Statistics.newAddOperation("IF", (int)Clock.getCurrentTime());
 			processor.getOFUnit().performOF();
 			Clock.incrementClock();
+			Statistics.newAddOperation("OF", (int)Clock.getCurrentTime());
 			processor.getEXUnit().performEX();
 			Clock.incrementClock();
+			Statistics.newAddOperation("EX", (int)Clock.getCurrentTime());
 			processor.getMAUnit().performMA();
 			Clock.incrementClock();
+			Statistics.newAddOperation("MA", (int)Clock.getCurrentTime());
 			processor.getRWUnit().performRW();
 			Clock.incrementClock();
+			Statistics.newAddOperation("RW", (int)Clock.getCurrentTime());
+			Statistics.newUploadStatHolder();
 		}
 		
 		// TODO
 		// set statistics
+		Statistics.setNumberOfInstructions(Statistics.statDats.size());
+
 	}
 	
 	public static void setSimulationComplete(boolean value)

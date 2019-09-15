@@ -130,6 +130,84 @@ public class Execute {
 					isLoad = false;
 					isStore = false;
 				}
+				//andi
+				else if(aluSignal == 9){
+					aluResult = performAnd(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//ORi
+				else if(aluSignal == 11){
+					aluResult = performOr(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//XORi
+				else if(aluSignal == 13){
+					aluResult = performXor(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//SLTI
+				else if(aluSignal == 15){
+					if(r1 < rI2){
+						aluResult = 1;
+					}else{
+						aluResult = 0;
+					}
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//SLLI
+				else if(aluSignal == 17){
+					isWb = true;
+					String temp = logicalLeftShift(r1, rI2);
+					int offSet = temp.length() - 32;
+					if(offSet > 0){
+						isSpecialWb = true;
+						aluResult = getInt(getLastSubString(temp, 32));
+						specialAluResult = getInt(getFirstSubString(temp, offSet));
+					}else{
+						isSpecialWb = false;
+						aluResult = getInt(temp);
+					}
+
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
+				//SRLI
+				else if(aluSignal == 19){
+					isWb = true;
+					String temp = logicalRightShift(r1, rI2);
+					int offset = temp.length() - 32;
+					if(offset > 0){
+						aluResult = getInt(getFirstSubString(temp, 32));
+					}else{
+						aluResult = getInt(temp);
+					}
+					isSpecialWb = false;
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
+				//SRAI
+				else if(aluSignal == 21){
+					isWb = true;
+					aluResult = getInt(ArithmeticRightShift(r1, rI2));
+					isSpecialWb = false;
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
 			}
 
 			//R3 and R1
@@ -176,6 +254,84 @@ public class Execute {
 					isLoad = false;
 					isStore = false;
 				}
+				//and
+				else if(aluSignal == 8){
+					aluResult = performAnd(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//OR
+				else if(aluSignal == 10){
+					aluResult = performOr(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//XOR
+				else if(aluSignal == 12){
+					aluResult = performXor(r1, rI2);
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//SLT
+				else if(aluSignal == 14){
+					if(r1 < rI2){
+						aluResult = 1;
+					}else{
+						aluResult = 0;
+					}
+					isWb = true;
+					isBranch = false;
+					isLoad = false;
+					isStore = false;
+				}
+				//SLL
+				else if(aluSignal == 16){
+					isWb = true;
+					String temp = logicalLeftShift(r1, rI2);
+					int offSet = temp.length() - 32;
+					if(offSet > 0){
+						isSpecialWb = true;
+						aluResult = getInt(getLastSubString(temp, 32));
+						specialAluResult = getInt(getFirstSubString(temp, offSet));
+					}else{
+						isSpecialWb = false;
+						aluResult = getInt(temp);
+					}
+
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
+				//SRL
+				else if(aluSignal == 18){
+					isWb = true;
+					String temp = logicalRightShift(r1, rI2);
+					int offset = temp.length() - 32;
+					if(offset > 0){
+						aluResult = getInt(getFirstSubString(temp, 32));
+					}else{
+						aluResult = getInt(temp);
+					}
+					isSpecialWb = false;
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
+				//SRA
+				else if(aluSignal == 20){
+					isWb = true;
+					aluResult = getInt(ArithmeticRightShift(r1, rI2));
+					isSpecialWb = false;
+					isBranch = false;;
+					isLoad = false;
+					isStore = false;
+				}
 			}
 
 
@@ -212,6 +368,216 @@ public class Execute {
 			OF_EX_Latch.setEX_enable(false);
 
 		}
+	}
+
+
+	//Helper Funcitons
+
+	public int performAnd(int r1, int r2){
+		int ans = 0;
+		String r1Str = getBinary(r1);
+		String r2Str = getBinary(r2);
+		int l1 = r1Str.length();
+		int l2 = r2Str.length();
+		int l = Math.max(l1, l2);
+		r1Str = addBinaryPrefix(l, r1Str);
+		r2Str = addBinaryPrefix(l, r2Str);
+
+		//operation
+		String ansString = "";
+		for(int i=0;i<l;i++){
+			if(r1Str.charAt(i) == '1' && r2Str.charAt(i) == '1'){
+				ansString = ansString + "1";
+			}else{
+				ansString = ansString + "0";
+			}
+		}
+		ans = getInt(ansString);
+
+		return ans;
+	}
+
+	public int performOr(int r1, int r2){
+		int ans = 0;
+		String r1Str = getBinary(r1);
+		String r2Str = getBinary(r2);
+		int l1 = r1Str.length();
+		int l2 = r2Str.length();
+		int l = Math.max(l1, l2);
+		r1Str = addBinaryPrefix(l, r1Str);
+		r2Str = addBinaryPrefix(l, r2Str);
+
+
+		//operation
+		String ansString = "";
+		for(int i=0;i<l;i++){
+			if(r1Str.charAt(i) == '1' || r2Str.charAt(i) == '1'){
+				ansString = ansString + "1";
+			}else{
+				ansString = ansString + "0";
+			}
+		}
+		ans = getInt(ansString);
+
+		return ans;
+	}
+	public int performXor(int r1, int r2){
+		int ans = 0;
+		String r1Str = getBinary(r1);
+		String r2Str = getBinary(r2);
+		int l1 = r1Str.length();
+		int l2 = r2Str.length();
+		int l = Math.max(l1, l2);
+		r1Str = addBinaryPrefix(l, r1Str);
+		r2Str = addBinaryPrefix(l, r2Str);
+
+
+		//operation
+		String ansString = "";
+		for(int i=0;i<l;i++){
+			if(r1Str.charAt(i) != r2Str.charAt(i)){
+				ansString = ansString + "1";
+			}else{
+				ansString = ansString + "0";
+			}
+		}
+		ans = getInt(ansString);
+
+		return ans;
+	}
+
+
+	public String logicalLeftShift(int i1, int i2){
+		String ans = "";
+
+		String s1 = getBinary(i1);
+		String st = "";
+		for(int i=0;i<i2;i++){
+			st = st + "0";
+		}
+
+		String s = s1 + st;
+
+		ans = s;
+		return ans;
+	}
+
+	public String logicalRightShift(int i1, int i2){
+		String ans = "";
+		String s1 = getBinary(i1);
+		String st = "";
+		for(int i=0;i<i2;i++){
+			st = st + "0";
+		}
+		String s = st + s1;
+
+		ans = s;
+
+		return ans;
+	}
+
+	public String ArithmeticRightShift(int i1, int i2){
+		String ans = "";
+		String s1 = getBinary(i1);
+		String tempStr = "";
+		if(i1 > 0){
+			tempStr = getFirstSubString(logicalRightShift(i1, i2), 32);
+		}
+		else if (i1 < 0){
+			String temp = "";
+			for(int i=0;i<i2;i++){
+				temp = temp + "1";
+			}
+			tempStr = getFirstSubString(temp + s1, 32);
+		}
+		ans = tempStr;
+
+		return  ans;
+	}
+
+	public String getLastSubString(String s, int l){
+		String ans = "";
+
+		String tempStr = "";
+		int offSet = s.length() - l;
+		if(offSet > 0){
+			for(int i=offSet;i<s.length();i++){
+				tempStr = tempStr + s.charAt(i);
+			}
+		}else{
+			tempStr = s;
+		}
+		ans = tempStr;
+
+		return ans;
+	}
+
+	public String getFirstSubString(String s, int l){
+		String ans = "";
+
+		String tempStr = "";
+		if(s.length() > l){
+			for(int i=0;i<l;i++){
+				tempStr = tempStr + s.charAt(i);
+			}
+		}
+		else{
+			tempStr = s;
+		}
+		ans = ans + tempStr;
+
+		return ans;
+	}
+
+
+	public String getBinary(int i){
+		String ans = "";
+		ans = Integer.toBinaryString(i);
+		return ans;
+	}
+
+	public int getInt(String subStr){
+		long ans = 0;
+//		String tempStr = "";
+//		if(subStr.charAt(0) == '1'){
+//			tempStr = "";
+//			for(int i=0;i<subStr.length();i++){
+//				if(subStr.charAt(i) == '1'){
+//					tempStr = tempStr + "0";
+//				}else{
+//					tempStr = tempStr + "1";
+//				}
+//			}
+//			ans = Long.parseLong(tempStr, 2);
+//			return (int)(ans + 1)*-1;
+//		}else{
+//			tempStr = subStr;
+//			ans = Long.parseLong(tempStr, 2);
+//		}
+//		ans = Long.parseLong(tempStr, 2);
+		ans = (int)Long.parseLong(subStr, 2);
+		return (int)ans;
+	}
+
+	public String addBinaryPrefix(int len, String s){
+		String ans = "";
+		int offset = len - s.length();
+		if(offset == 0){
+			return s;
+		}else if(offset < 0){
+			ans = s.substring(-1*offset, s.length());
+			if(ans.length() > len){
+				System.out.println("Error in adding binary suffix");
+			}else{
+				return ans;
+			}
+		}
+		String strpref = "";
+		for(int i=0;i<offset;i++){
+			strpref = strpref + String.valueOf(0);
+		}
+		ans = strpref + s;
+		return ans;
 	}
 
 }
