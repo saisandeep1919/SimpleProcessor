@@ -29,6 +29,11 @@ public class MemoryAccess {
 			//checking store
 			if(isStore){
 				containingProcessor.getMainMemory().setWord(aluResult, r1);
+				EX_MA_Latch.isStore = false;
+			}
+			if(isLoad){
+				aluResult = containingProcessor.getMainMemory().getWord(aluResult);
+				EX_MA_Latch.isLoad = false;
 			}
 
 			EX_MA_Latch.setMA_enable(false);

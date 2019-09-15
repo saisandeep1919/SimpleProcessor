@@ -61,12 +61,7 @@ public class OperandFetch {
 				isImmediate = true;
 				r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
 				rd = getSubIntValFromInt(instruction, 10, 15);
-				if(opcode == 22 || opcode == 23){
-					rI2 = containingProcessor.getMainMemory().getWord((int)getSubLongValFromInt(instruction, 15, 32));
-				}
-				else{
-					rI2 = (int)getSubLongValFromInt(instruction, 15, 32);
-				}
+				rI2 = (int)getSubLongValFromInt(instruction, 15, 32);
 
 			}
 			else if(operationType == 3){
