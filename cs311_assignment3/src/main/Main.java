@@ -1,13 +1,13 @@
 package main;
-import java.util.ArrayList;
-
 import configuration.Configuration;
 import generic.Misc;
+import generic.Simulator;
 import generic.Statistics;
 import processor.Processor;
 import processor.memorysystem.MainMemory;
 import processor.pipeline.RegisterFile;
-import generic.Simulator;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -24,7 +24,7 @@ public class Main {
 		Simulator.setupSimulation(args[2], processor);
 		Simulator.simulate();
 		
-		processor.printState(0, 65535); // ((0, 0) refers to the range of main memory addresses we wish to print. this is an empty set.
+		processor.printState(0, 50); // ((0, 0) refers to the range of main memory addresses we wish to print. this is an empty set.
 		
 		Statistics.printStatistics(args[1]);
 		

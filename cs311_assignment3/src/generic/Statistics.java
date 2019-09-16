@@ -1,7 +1,5 @@
 package generic;
 
-import jdk.internal.dynalink.beans.StaticClass;
-
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
