@@ -114,7 +114,16 @@ public class Execute {
 				}
 				//multi
 				else if(aluSignal == 5){
-					aluResult = r1 * rI2;
+					long temp = (long) r1 * (long)rI2;
+					String tempStr = Long.toBinaryString(temp);
+					if(tempStr.length() > 32){
+						isSpecialWb = true;
+						aluResult = Integer.valueOf(getLastSubString(tempStr, 32));
+						specialAluResult = Integer.valueOf(getFirstSubString(tempStr, tempStr.length() - 32));
+					}else{
+						aluResult = r1 * rI2;
+						isSpecialWb = false;
+					}
 					isWb = true;
 					isBranch = false;
 					isLoad = false;
@@ -238,7 +247,16 @@ public class Execute {
 				}
 				//mul
 				else if(aluSignal == 4){
-					aluResult = r1 * rI2;
+					long temp = (long) r1 * (long)rI2;
+					String tempStr = Long.toBinaryString(temp);
+					if(tempStr.length() > 32){
+						isSpecialWb = true;
+						aluResult = Integer.valueOf(getLastSubString(tempStr, 32));
+						specialAluResult = Integer.valueOf(getFirstSubString(tempStr, tempStr.length() - 32));
+					}else{
+						aluResult = r1 * rI2;
+						isSpecialWb = false;
+					}
 					isWb = true;
 					isBranch = false;
 					isLoad = false;
