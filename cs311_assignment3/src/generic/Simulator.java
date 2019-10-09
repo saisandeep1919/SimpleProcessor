@@ -1,6 +1,7 @@
 package generic;
 
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import processor.Clock;
 import processor.Processor;
 
@@ -73,6 +74,7 @@ public class Simulator {
 	public static void simulate()
 	{
 		Statistics.setNumberOfCycles(0);
+		Statistics.printStatisticsInfo();
 		int pc = 0;
 		int insInt = 0;
 		String insString = "";
@@ -80,6 +82,7 @@ public class Simulator {
 		while(simulationComplete == false)
 		{
 			Statistics.incrementCycles();
+			//System.out.println(processor.getRegisterFile().getProgramCounter() + "REG x5 : " + processor.getRegisterFile().getValue(5));
 			processor.getIFUnit().performIF();
 			pc = processor.getRegisterFile().getProgramCounter() - 1;
 			insInt = processor.getMainMemory().getWord(pc);
@@ -100,12 +103,12 @@ public class Simulator {
 			processor.getRWUnit().performRW();
 			Clock.incrementClock();
 			Statistics.newAddOperation("RW", (int)Clock.getCurrentTime());
+			Statistics.addRegString(processor.getRegisterFile().getContentsAsMyString());
 			Statistics.newUploadStatHolder();
+			Statistics.printStatistics(); //Automatically updates the number of instructions
 		}
 		
-		// TODO
-		// set statistics
-		Statistics.setNumberOfInstructions(Statistics.statDats.size());
+
 
 	}
 	

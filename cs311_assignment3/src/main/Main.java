@@ -22,11 +22,12 @@ public class Main {
 		Processor processor = new Processor();
 		
 		Simulator.setupSimulation(args[2], processor);
+		Statistics.openStatisticsFile(args[1]);
 		Simulator.simulate();
 		
 		processor.printState(0, 50); // ((0, 0) refers to the range of main memory addresses we wish to print. this is an empty set.
-		
-		Statistics.printStatistics(args[1]);
+
+		Statistics.closeStatisticsFile();
 		
 		System.out.println("Hash of the Processor State = "+getHashCode(processor.getRegisterFile(), processor.getMainMemory()));
 	}

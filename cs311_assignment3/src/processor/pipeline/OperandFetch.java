@@ -94,8 +94,8 @@ public class OperandFetch {
 		return ans;
 	}
 
-	private long BinToInt(String subStr) {
-		long ans = 0;
+	private int BinToInt(String subStr) {
+		int ans = 0;
 		String tempStr = "";
 		if(subStr.charAt(0) == '1'){
 			tempStr = "";
@@ -106,13 +106,13 @@ public class OperandFetch {
 					tempStr = tempStr + "1";
 				}
 			}
-			ans = Long.parseLong(tempStr, 2);
+			ans = Integer.parseInt(tempStr, 2);
 			return (ans + 1)*-1;
 		}else{
 			tempStr = subStr;
-			ans = Long.parseLong(tempStr, 2);
+			ans = Integer.parseInt(tempStr, 2);
 		}
-		ans = Long.parseLong(tempStr, 2);
+		//ans = Long.parseLong(tempStr, 2);
 		return ans;
 	}
 

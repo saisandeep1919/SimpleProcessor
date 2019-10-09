@@ -555,26 +555,25 @@ public class Execute {
 	}
 
 	public int getInt(String subStr){
-		long ans = 0;
-//		String tempStr = "";
-//		if(subStr.charAt(0) == '1'){
-//			tempStr = "";
-//			for(int i=0;i<subStr.length();i++){
-//				if(subStr.charAt(i) == '1'){
-//					tempStr = tempStr + "0";
-//				}else{
-//					tempStr = tempStr + "1";
-//				}
-//			}
-//			ans = Long.parseLong(tempStr, 2);
-//			return (int)(ans + 1)*-1;
-//		}else{
-//			tempStr = subStr;
-//			ans = Long.parseLong(tempStr, 2);
-//		}
-//		ans = Long.parseLong(tempStr, 2);
-		ans = (int)Long.parseLong(subStr, 2);
-		return (int)ans;
+		int ans = 0;
+		String tempStr = "";
+		if(subStr.charAt(0) == '1'){
+			tempStr = "";
+			for(int i=0;i<subStr.length();i++){
+				if(subStr.charAt(i) == '1'){
+					tempStr = tempStr + "0";
+				}else{
+					tempStr = tempStr + "1";
+				}
+			}
+			ans = Integer.parseInt(tempStr, 2);
+			return (ans + 1)*-1;
+		}else{
+			tempStr = subStr;
+			ans = Integer.parseInt(tempStr, 2);
+		}
+		//ans = Long.parseLong(tempStr, 2);
+		return ans;
 	}
 
 	public String addBinaryPrefix(int len, String s){
