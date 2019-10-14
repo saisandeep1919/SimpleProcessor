@@ -15,6 +15,8 @@ public class Statistics {
 	public static StatHolder tempHolder;
 	public static String fileName = "";
 	public static PrintWriter writer;
+	public static int OFhalt;
+	public static int wrongBranch;
 
 	public static void openStatisticsFile(String name){
 		fileName = name;
@@ -55,11 +57,11 @@ public class Statistics {
 							+ "Instruction - "+ statDats.get(i).insStr  + getZeroes(statDats.get(i).insStr.length(), 32) + " (" + statDats.get(i).insInt + ")   "
 							+ getZeroes((String.valueOf(statDats.get(i).insInt).length()), 15)
 							+ "Cycle - " + statDats.get(i).cycle + " " +  getZeroes((String.valueOf(statDats.get(i).cycle).length()), 15)
-							+ "IF (" + statDats.get(i).operations.get(0).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(0).clock).length()), 7)
-							+ "OF (" + statDats.get(i).operations.get(1).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(1).clock).length()), 7)
+							+ "RW (" + statDats.get(i).operations.get(0).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(0).clock).length()), 7)
+							+ "MA (" + statDats.get(i).operations.get(1).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(1).clock).length()), 7)
 							+ "EX (" + statDats.get(i).operations.get(2).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(2).clock).length()), 7)
-							+ "MA (" + statDats.get(i).operations.get(3).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(3).clock).length()), 7)
-							+ "RW (" + statDats.get(i).operations.get(4).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(4).clock).length()), 7)
+							+ "OF (" + statDats.get(i).operations.get(3).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(3).clock).length()), 7)
+							+ "IF (" + statDats.get(i).operations.get(4).clock + ")" + " "  + getZeroes((String.valueOf(statDats.get(i).operations.get(4).clock).length()), 7)
 							+ "[[ REG - " + statDats.get(i).regString + "]]"
 			);
 		}
@@ -68,14 +70,32 @@ public class Statistics {
 	}
 
 	public static void closeStatisticsFile(){
-		writer.println("");
+//		writer.println("");
 		writer.println("Number of instructions executed = " + numberOfInstructions);
 		writer.println("Number of cycles taken = " + numberOfCycles);
+		writer.println("Number of times OF halted " + OFhalt);
+		writer.println("Number of times wrong branch taken " + wrongBranch);
 		writer.close();
 	}
 
 	
 	// TODO write functions to update statistics
+	public static void setOFhalt(int halt){
+		Statistics.OFhalt = halt;
+	}
+
+	public static void incrementOFhalt(){
+		Statistics.OFhalt++;
+	}
+
+	public static void setWrongBranch(int wrong){
+		Statistics.wrongBranch = wrong;
+	}
+
+	public static void incrementWrongBranch(){
+		Statistics.wrongBranch++;
+	}
+
 	public static void setNumberOfInstructions(int numberOfInstructions) {
 		Statistics.numberOfInstructions = numberOfInstructions;
 	}
@@ -86,6 +106,14 @@ public class Statistics {
 
 	public static void incrementCycles(){
 		Statistics.numberOfCycles++;
+	}
+
+	public static void incrementInstructions(){
+		Statistics.numberOfInstructions++;
+	}
+
+	public static void decrementInstructinos(){
+		Statistics.numberOfInstructions--;
 	}
 
 	public static void newStatHolder(int pc, int insInt, String insStr, int cycle){

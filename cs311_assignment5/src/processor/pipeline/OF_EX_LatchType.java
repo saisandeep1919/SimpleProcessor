@@ -8,6 +8,8 @@ public class OF_EX_LatchType {
 	public int ri2;
 	public int rd;
 	public boolean isImmediate;
+	public boolean inBubble;
+	public int pc;
 
 
 	

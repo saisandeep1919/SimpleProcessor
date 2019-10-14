@@ -12,6 +12,10 @@ public class EX_MA_LatchType {
 	boolean isWb;
 	boolean isSpecialWb;
 	int specialAluResult;
+	boolean inBubble;
+	boolean isEnd = false;
+	int endPC;
+	int pc;
 	
 	public EX_MA_LatchType()
 	{

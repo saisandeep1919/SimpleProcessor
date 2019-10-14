@@ -4,6 +4,7 @@ public class EX_IF_LatchType {
 
 	boolean isBranchTaken;
 	int newPC;
+	boolean inBubble;
 	public EX_IF_LatchType(){
 		isBranchTaken = false;
 	}

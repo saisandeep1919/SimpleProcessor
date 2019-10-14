@@ -27,6 +27,9 @@ public class MemoryAccess {
 			boolean isWb = EX_MA_Latch.isWb;
 			boolean isSpecialWb = EX_MA_Latch.isSpecialWb;
 			int specialAluResult = EX_MA_Latch.specialAluResult;
+			boolean isEnd = EX_MA_Latch.isEnd;
+			int endPC = EX_MA_Latch.endPC;
+			int pc = EX_MA_Latch.pc;
 
 			//checking store
 			if(isStore){
@@ -45,6 +48,16 @@ public class MemoryAccess {
 			MA_RW_Latch.isWb = isWb;
 			MA_RW_Latch.isSpecailWb = isSpecialWb;
 			MA_RW_Latch.specailAluResult = specialAluResult;
+			MA_RW_Latch.isEnd = isEnd;
+			MA_RW_Latch.endPC = endPC;
+			MA_RW_Latch.pc = pc;
+		}
+
+		if(EX_MA_Latch.inBubble){
+			MA_RW_Latch.setRW_enable(false);
+			MA_RW_Latch.inBubble = true;
+		}else{
+			MA_RW_Latch.inBubble = false;
 		}
 	}
 

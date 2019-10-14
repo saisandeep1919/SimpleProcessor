@@ -26,16 +26,24 @@ public class RegisterWrite {
 			boolean isWb = MA_RW_Latch.isWb;
 			boolean isSpecailWb = MA_RW_Latch.isSpecailWb;
 			int specailAluResult = MA_RW_Latch.specailAluResult;
+			boolean isEnd = MA_RW_Latch.isEnd;
+			int endPC = MA_RW_Latch.endPC;
 
 			if(isWb){
 				containingProcessor.getRegisterFile().setValue(rd, aluResult);
+				containingProcessor.getInUse().remove(String.valueOf(rd));
 			}
-
 			if(isSpecailWb){
 				containingProcessor.getRegisterFile().setValue(31, specailAluResult);
+				containingProcessor.getInUse().remove(String.valueOf(31));
 				MA_RW_Latch.isSpecailWb = false;
 			}
 
+			if(isEnd){
+				Simulator.setSimulationComplete(true);
+				Simulator.setEndPC(endPC);
+
+			}
 
 			MA_RW_Latch.setRW_enable(false);
 			IF_EnableLatch.setIF_enable(true);

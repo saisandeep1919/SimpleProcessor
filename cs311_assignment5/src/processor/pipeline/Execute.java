@@ -1,6 +1,7 @@
 package processor.pipeline;
 
 import generic.Simulator;
+import generic.Statistics;
 import processor.Processor;
 
 public class Execute {
@@ -26,6 +27,7 @@ public class Execute {
 			int r1 = OF_EX_Latch.getR1();
 			int rI2 = OF_EX_Latch.getRi2();
 			int rd = OF_EX_Latch.getRd();
+			int pc = OF_EX_Latch.pc;
 
 			boolean isBranch = false;
 			boolean isLoad = false;
@@ -34,6 +36,10 @@ public class Execute {
 			boolean isWb = false;
 			boolean isSpecialWb = false;
 			int specialAluResult = 0;
+
+			boolean isEnd = false;
+			int endPC = 0;
+
 
 			//R2I and jmp
 			if(isImmediate){
@@ -227,7 +233,9 @@ public class Execute {
 					aluResult = rd;
 				}
 				else if(aluSignal == 29){
-					Simulator.setSimulationComplete(true);
+					//Simulator.setSimulationComplete(true);
+					isEnd = true;
+					endPC = pc + 1;
 				}
 				//add
 				else if(aluSignal == 0){
@@ -360,6 +368,13 @@ public class Execute {
 			EX_MA_Latch.isWb = isWb;
 			EX_MA_Latch.isSpecialWb = isSpecialWb;
 			EX_MA_Latch.specialAluResult = specialAluResult;
+			EX_MA_Latch.isEnd = isEnd;
+			EX_MA_Latch.endPC = endPC;
+			EX_MA_Latch.pc = pc;
+
+			if(isSpecialWb){
+				containingProcessor.getInUse().add(String.valueOf(31));
+			}
 
 			if(isLoad && isStore){
 				System.out.println("Error in Execute - Both Load and Store");
@@ -378,13 +393,25 @@ public class Execute {
 
 			if(isBranch){
 				EX_IF_Latch.isBranchTaken = true;
-				EX_IF_Latch.newPC = containingProcessor.getRegisterFile().getProgramCounter() - 1 + rI2;
+				EX_IF_Latch.newPC = pc + rI2;
+				containingProcessor.disableOF();
+				Statistics.incrementWrongBranch();
+				Statistics.decrementInstructinos();
 			}else{
 				EX_IF_Latch.isBranchTaken = false;
 			}
 
 			OF_EX_Latch.setEX_enable(false);
 
+		}
+		if(OF_EX_Latch.inBubble){
+			EX_MA_Latch.MA_enable = false;
+			EX_MA_Latch.inBubble = true;
+
+			EX_IF_Latch.isBranchTaken = false;
+		}else{
+			EX_MA_Latch.inBubble = false;
+			containingProcessor.enableIF();
 		}
 	}
 

@@ -1,5 +1,6 @@
 package processor.pipeline;
 
+import generic.Statistics;
 import processor.Processor;
 
 public class OperandFetch {
@@ -17,6 +18,7 @@ public class OperandFetch {
 	
 	public void performOF()
 	{
+		boolean isSafe = false;
 		if(IF_OF_Latch.isOF_enable())
 		{
 			//TODO
@@ -27,9 +29,13 @@ public class OperandFetch {
 			int instruction = IF_OF_Latch.getInstruction();
 			int opcode = getOpcode(IF_OF_Latch.getInstruction());
 			int operationType = getOperationType(opcode);  // 1,2,3  values are possible
+			int pc = IF_OF_Latch.pc;
+			boolean pastEncounteredBubble = IF_OF_Latch.pastEncounteredBubble;
 
 
 			if(operationType == 1){
+				containingProcessor.disableOF();
+				isSafe = true;
 				if(opcode == 29){
 					isImmediate = false;
 					r1 = 0;
@@ -63,21 +69,64 @@ public class OperandFetch {
 				rd = getSubIntValFromInt(instruction, 10, 15);
 				rI2 = (int)getSubLongValFromInt(instruction, 15, 32);
 
+				if(opcode >24 && opcode <29){
+					if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))
+							&& !containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 10, 15)))){
+						isSafe = true;
+					}else{
+						isSafe = false;
+					}
+				}
+				else{
+					if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))){
+						isSafe = true;
+						if(opcode != 23){
+							containingProcessor.getInUse().add(String.valueOf(rd));
+						}
+					}else{
+						isSafe = false;
+					}
+				}
 			}
 			else if(operationType == 3){
 				isImmediate = false;
 				r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
 				rI2 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 10, 15));
 				rd = getSubIntValFromInt(instruction, 15, 20);
+				if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))
+						&& !containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 10, 15)))){
+					isSafe = true;
+					containingProcessor.getInUse().add(String.valueOf(rd));
+				}else{
+					isSafe = false;
+				}
 			}
 			OF_EX_Latch.aluSignal = opcode;
 			OF_EX_Latch.isImmediate = isImmediate;
 			OF_EX_Latch.r1 = r1;
 			OF_EX_Latch.ri2 = rI2;
 			OF_EX_Latch.rd = rd;
+			OF_EX_Latch.pc = pc;
 
-			IF_OF_Latch.setOF_enable(false);
-			OF_EX_Latch.setEX_enable(true);
+
+
+			if(isSafe){
+				containingProcessor.enableIF();
+				IF_OF_Latch.setOF_enable(true);
+				IF_OF_Latch.pastEncounteredBubble = false;
+
+				OF_EX_Latch.setEX_enable(true);
+				OF_EX_Latch.inBubble = false;
+			}
+			else{
+				Statistics.incrementOFhalt();
+				containingProcessor.disableIF();
+				IF_OF_Latch.setOF_enable(true);
+				IF_OF_Latch.pastEncounteredBubble = true;
+
+				OF_EX_Latch.setEX_enable(false);
+				OF_EX_Latch.inBubble = true;
+			}
 		}
 	}
 

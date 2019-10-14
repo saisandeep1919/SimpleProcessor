@@ -4,6 +4,8 @@ public class IF_OF_LatchType {
 	
 	boolean OF_enable;
 	int instruction;
+	boolean pastEncounteredBubble;
+	public int pc;
 	
 	public IF_OF_LatchType()
 	{

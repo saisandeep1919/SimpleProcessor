@@ -1,7 +1,7 @@
 package generic;
 
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import processor.Clock;
 import processor.Processor;
 
@@ -14,6 +14,7 @@ public class Simulator {
 		
 	static Processor processor;
 	static boolean simulationComplete;
+	static int endPC;
 	
 	public static void setupSimulation(String assemblyProgramFile, Processor p)
 	{
@@ -74,13 +75,16 @@ public class Simulator {
 	public static void simulate()
 	{
 		Statistics.setNumberOfCycles(0);
-		Statistics.printStatisticsInfo();
-		int pc = 0;
-		int insInt = 0;
-		String insString = "";
-		int cycle = 0;
+		Statistics.setOFhalt(0);
+		Statistics.setWrongBranch(0);
+//		Statistics.printStatisticsInfo();
+//		int pc = 0;
+//		int insInt = 0;
+//		String insString = "";
+//		int cycle = 0;
 		while(simulationComplete == false)
 		{
+			/*
 			Statistics.incrementCycles();
 			//System.out.println(processor.getRegisterFile().getProgramCounter() + "REG x5 : " + processor.getRegisterFile().getValue(5));
 			processor.getIFUnit().performIF();
@@ -91,21 +95,62 @@ public class Simulator {
 			Statistics.newStatHolder(pc, insInt, insString, cycle);
 			Clock.incrementClock();
 			Statistics.newAddOperation("IF", (int)Clock.getCurrentTime());
+
 			processor.getOFUnit().performOF();
 			Clock.incrementClock();
 			Statistics.newAddOperation("OF", (int)Clock.getCurrentTime());
+
 			processor.getEXUnit().performEX();
 			Clock.incrementClock();
 			Statistics.newAddOperation("EX", (int)Clock.getCurrentTime());
+
 			processor.getMAUnit().performMA();
 			Clock.incrementClock();
 			Statistics.newAddOperation("MA", (int)Clock.getCurrentTime());
+
 			processor.getRWUnit().performRW();
 			Clock.incrementClock();
 			Statistics.newAddOperation("RW", (int)Clock.getCurrentTime());
+
 			Statistics.addRegString(processor.getRegisterFile().getContentsAsMyString());
 			Statistics.newUploadStatHolder();
 			Statistics.printStatistics(); //Automatically updates the number of instructions
+			*/
+
+			Statistics.incrementCycles();
+//			System.out.println(processor.getRegisterFile().getProgramCounter());
+//			pc = processor.getRegisterFile().getProgramCounter() ;
+//			insInt = processor.getMainMemory().getWord(pc);
+//			insString = Integer.toBinaryString(insInt);
+//			cycle = Statistics.numberOfCycles;
+//			Statistics.newStatHolder(pc, insInt, insString, cycle);
+			processor.getRWUnit().performRW();
+			Clock.incrementClock();
+//			Statistics.newAddOperation("RW", (int)Clock.getCurrentTime());
+
+			processor.getMAUnit().performMA();
+			Clock.incrementClock();
+//			Statistics.newAddOperation("MA", (int)Clock.getCurrentTime());
+
+			processor.getEXUnit().performEX();
+			Clock.incrementClock();
+//			Statistics.newAddOperation("EX", (int)Clock.getCurrentTime());
+
+			processor.getOFUnit().performOF();
+			Clock.incrementClock();
+//			Statistics.newAddOperation("OF", (int)Clock.getCurrentTime());
+
+			processor.getIFUnit().performIF();
+			Clock.incrementClock();
+//			Statistics.newAddOperation("IF", (int)Clock.getCurrentTime());
+
+//			Statistics.addRegString(processor.getRegisterFile().getContentsAsMyString());
+//			Statistics.newUploadStatHolder();
+//			Statistics.printStatistics(); //Automatically updates the number of instructions
+
+			if(simulationComplete){
+				processor.getRegisterFile().setProgramCounter(endPC);
+			}
 		}
 		
 
@@ -115,5 +160,9 @@ public class Simulator {
 	public static void setSimulationComplete(boolean value)
 	{
 		simulationComplete = value;
+	}
+
+	public static void setEndPC(int epc){
+		endPC = epc;
 	}
 }

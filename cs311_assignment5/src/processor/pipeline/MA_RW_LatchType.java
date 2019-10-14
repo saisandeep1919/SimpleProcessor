@@ -8,6 +8,10 @@ public class MA_RW_LatchType {
 	boolean isWb;
 	boolean isSpecailWb;
 	int specailAluResult;
+	boolean inBubble;
+	boolean isEnd = false;
+	int endPC;
+	int pc;
 
 	public MA_RW_LatchType()
 	{

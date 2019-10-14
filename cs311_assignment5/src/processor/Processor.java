@@ -14,6 +14,10 @@ import processor.pipeline.OperandFetch;
 import processor.pipeline.RegisterFile;
 import processor.pipeline.RegisterWrite;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class Processor {
 	
 	RegisterFile registerFile;
@@ -31,6 +35,9 @@ public class Processor {
 	Execute EXUnit;
 	MemoryAccess MAUnit;
 	RegisterWrite RWUnit;
+
+	ArrayList<String> inUse = new ArrayList<String>();
+
 	
 	public Processor()
 	{
@@ -49,8 +56,30 @@ public class Processor {
 		EXUnit = new Execute(this, OF_EX_Latch, EX_MA_Latch, EX_IF_Latch);
 		MAUnit = new MemoryAccess(this, EX_MA_Latch, MA_RW_Latch);
 		RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
+
+
 	}
-	
+
+	public ArrayList<String> getInUse(){
+		return inUse;
+	}
+
+	public void enableIF(){
+		IF_EnableLatch.setIF_enable(true);
+	}
+
+	public void disableIF(){
+		IF_EnableLatch.setIF_enable(false);
+	}
+
+	public void disableOF(){
+		IF_OF_Latch.setOF_enable(false);
+	}
+
+	public void enableOF(){
+		IF_OF_Latch.setOF_enable(true);
+	}
+
 	public void printState(int memoryStartingAddress, int memoryEndingAddress)
 	{
 		System.out.println(registerFile.getContentsAsString());

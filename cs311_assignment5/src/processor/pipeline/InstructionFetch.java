@@ -1,5 +1,6 @@
 package processor.pipeline;
 
+import generic.Statistics;
 import processor.Processor;
 
 public class InstructionFetch {
@@ -21,6 +22,7 @@ public class InstructionFetch {
 	{
 		if(IF_EnableLatch.isIF_enable())
 		{
+			Statistics.incrementInstructions();
 			if(EX_IF_Latch.isBranchTaken){
 				int newInstruction = containingProcessor.getMainMemory().getWord(EX_IF_Latch.newPC);
 				IF_OF_Latch.setInstruction(newInstruction);
@@ -34,6 +36,7 @@ public class InstructionFetch {
 			}
 			IF_EnableLatch.setIF_enable(false);
 			IF_OF_Latch.setOF_enable(true);
+			IF_OF_Latch.pc = containingProcessor.getRegisterFile().getProgramCounter() - 1;
 		}
 	}
 
