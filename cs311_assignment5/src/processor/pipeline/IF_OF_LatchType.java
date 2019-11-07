@@ -1,15 +1,18 @@
 package processor.pipeline;
 
 public class IF_OF_LatchType {
-	
+
+	boolean isCurrentDataValid = false;
+	boolean isOFBusy = false;
 	boolean OF_enable;
 	int instruction;
 	boolean pastEncounteredBubble;
 	public int pc;
+	public boolean dropThisIns;
 	
 	public IF_OF_LatchType()
 	{
-		OF_enable = false;
+		OF_enable = true;
 	}
 
 	public boolean isOF_enable() {

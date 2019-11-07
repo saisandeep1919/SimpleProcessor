@@ -1,7 +1,9 @@
 package processor.pipeline;
 
 public class MA_RW_LatchType {
-	
+
+	boolean isCurrentDataValid = false;
+	boolean isRWBusy = false;
 	boolean RW_enable;
 	int aluResult;
 	int rd;
@@ -15,7 +17,7 @@ public class MA_RW_LatchType {
 
 	public MA_RW_LatchType()
 	{
-		RW_enable = false;
+		RW_enable = true;
 	}
 
 	public boolean isRW_enable() {

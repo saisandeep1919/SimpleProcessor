@@ -1,9 +1,13 @@
 package processor.pipeline;
 
 public class IF_EnableLatchType {
-	
+
+	boolean isCurrentDataValid = false;
+	boolean isIFBusy = false;
 	boolean IF_enable;
 	boolean isEndEncountered = false;
+	boolean isIFWaiting = false;
+	int currentPC = 0;
 	
 	public IF_EnableLatchType()
 	{

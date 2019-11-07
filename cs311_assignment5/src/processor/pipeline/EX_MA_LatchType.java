@@ -1,7 +1,10 @@
 package processor.pipeline;
 
 public class EX_MA_LatchType {
-	
+
+	boolean isMAWaiting = false;
+	boolean isCurrentDataValid = false;
+	boolean isMABusy = false;
 	boolean MA_enable;
 	int aluResult;
 	boolean isLoad;
@@ -19,7 +22,7 @@ public class EX_MA_LatchType {
 	
 	public EX_MA_LatchType()
 	{
-		MA_enable = false;
+		MA_enable = true;
 	}
 
 	public boolean isMA_enable() {

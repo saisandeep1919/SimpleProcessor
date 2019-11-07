@@ -1,7 +1,10 @@
 package processor.pipeline;
 
 public class OF_EX_LatchType {
-	
+
+
+	boolean isCurrentDataValid = false;
+	boolean isEXBusy = false;
 	boolean EX_enable;
 	public int aluSignal; //For opcode transfer
 	public int r1;
@@ -15,7 +18,7 @@ public class OF_EX_LatchType {
 	
 	public OF_EX_LatchType()
 	{
-		EX_enable = false;
+		EX_enable = true;
 	}
 
 	public boolean isEX_enable() {

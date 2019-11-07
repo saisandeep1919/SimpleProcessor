@@ -14,12 +14,10 @@ public class RegisterWrite {
 		this.MA_RW_Latch = mA_RW_Latch;
 		this.IF_EnableLatch = iF_EnableLatch;
 	}
-	
+
 	public void performRW()
 	{
-		if(MA_RW_Latch.isRW_enable())
-		{
-			//TODO
+		if(MA_RW_Latch.isRW_enable() && MA_RW_Latch.isCurrentDataValid && !MA_RW_Latch.inBubble) {
 
 			int aluResult = MA_RW_Latch.aluResult;
 			int rd = MA_RW_Latch.rd;
@@ -45,8 +43,16 @@ public class RegisterWrite {
 
 			}
 
-			MA_RW_Latch.setRW_enable(false);
-			IF_EnableLatch.setIF_enable(true);
+			MA_RW_Latch.isCurrentDataValid = false;
+			MA_RW_Latch.isRWBusy = false;
+			MA_RW_Latch.inBubble = false;
+
+//			MA_RW_Latch.setRW_enable(false);
+//			IF_EnableLatch.setIF_enable(true);
+		}else if(MA_RW_Latch.inBubble && MA_RW_Latch.isCurrentDataValid){
+			MA_RW_Latch.isRWBusy = false;
+			MA_RW_Latch.isCurrentDataValid = false;
+			MA_RW_Latch.inBubble = false;
 		}
 	}
 

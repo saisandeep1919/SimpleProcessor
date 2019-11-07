@@ -76,7 +76,7 @@ public class Processor {
 	}
 
 	public void disableOF(){
-		IF_OF_Latch.setOF_enable(false);
+		IF_OF_Latch.dropThisIns = true;
 	}
 
 	public void enableOF(){

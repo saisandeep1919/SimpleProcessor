@@ -19,7 +19,7 @@ public class Execute {
 	
 	public void performEX()
 	{
-		if(OF_EX_Latch.isEX_enable()){
+		if(OF_EX_Latch.isEX_enable() && OF_EX_Latch.isCurrentDataValid && !OF_EX_Latch.inBubble){
 			//TODO
 			int aluSignal = OF_EX_Latch.getAluSignal();
 			boolean isImmediate = OF_EX_Latch.isImmediate();
@@ -367,22 +367,31 @@ public class Execute {
 				containingProcessor.setIsEndEncountered(true);
 			}
 
-			EX_MA_Latch.setMA_enable(true);
-			EX_MA_Latch.aluResult = aluResult;
-			EX_MA_Latch.isWb = isWb;
-			EX_MA_Latch.isSpecialWb = isSpecialWb;
-			EX_MA_Latch.specialAluResult = specialAluResult;
-			EX_MA_Latch.isEnd = isEnd;
-			EX_MA_Latch.endPC = endPC;
-			EX_MA_Latch.pc = pc;
 
-			if(isSpecialWb){
-				containingProcessor.getInUse().add(String.valueOf(31));
-			}
 
 			if(isLoad && isStore){
 				System.out.println("Error in Execute - Both Load and Store");
-			}else{
+				System.exit(0);
+			}
+
+			if(!EX_MA_Latch.isMABusy){
+				if(isSpecialWb){
+					containingProcessor.getInUse().add(String.valueOf(31));
+				}
+
+				if(EX_MA_Latch.isCurrentDataValid){
+					System.out.println("Error in EX : Failed sync between busy and data validity");
+				}
+
+//				EX_MA_Latch.setMA_enable(true);
+				EX_MA_Latch.aluResult = aluResult;
+				EX_MA_Latch.isWb = isWb;
+				EX_MA_Latch.isSpecialWb = isSpecialWb;
+				EX_MA_Latch.specialAluResult = specialAluResult;
+				EX_MA_Latch.isEnd = isEnd;
+				EX_MA_Latch.endPC = endPC;
+				EX_MA_Latch.pc = pc;
+
 				EX_MA_Latch.r1 = r1;
 				EX_MA_Latch.rI2 = rI2;
 				EX_MA_Latch.rd = rd;
@@ -393,29 +402,45 @@ public class Execute {
 					EX_MA_Latch.isLoad = false;
 					EX_MA_Latch.isStore = true;
 				}
-			}
 
-			if(isBranch){
-				EX_IF_Latch.isBranchTaken = true;
-				EX_IF_Latch.newPC = pc + rI2;
-				containingProcessor.disableOF();
-				Statistics.incrementWrongBranch();
-				Statistics.decrementInstructinos();
+				if(isBranch){
+					EX_IF_Latch.isBranchTaken = true;
+					EX_IF_Latch.newPC = pc + rI2;
+					containingProcessor.disableOF();
+					Statistics.incrementWrongBranch();
+					Statistics.decrementInstructinos();
+				}else{
+					EX_IF_Latch.isBranchTaken = false;
+				}
+
+				OF_EX_Latch.isCurrentDataValid = false;
+				OF_EX_Latch.isEXBusy = false;
+				EX_MA_Latch.inBubble = false;
+				EX_MA_Latch.isCurrentDataValid = true;
+
 			}else{
-				EX_IF_Latch.isBranchTaken = false;
+				OF_EX_Latch.isCurrentDataValid = true;
+				OF_EX_Latch.isEXBusy = true;
 			}
 
-			OF_EX_Latch.setEX_enable(false);
+//			OF_EX_Latch.setEX_enable(false);
 
 		}
-		if(OF_EX_Latch.inBubble){
-			EX_MA_Latch.MA_enable = false;
-			EX_MA_Latch.inBubble = true;
+		else if(OF_EX_Latch.inBubble && OF_EX_Latch.isCurrentDataValid){
+			if(!EX_MA_Latch.isMABusy){
+				OF_EX_Latch.isCurrentDataValid = false;
+				OF_EX_Latch.isEXBusy = false;
+				OF_EX_Latch.inBubble = false;
 
-			EX_IF_Latch.isBranchTaken = false;
-		}else{
-			EX_MA_Latch.inBubble = false;
-			containingProcessor.enableIF();
+				EX_MA_Latch.isCurrentDataValid = true;
+				EX_MA_Latch.inBubble = true;
+
+
+				EX_IF_Latch.isBranchTaken = false;
+			}else{
+				OF_EX_Latch.isCurrentDataValid = true;
+				OF_EX_Latch.isEXBusy = true;
+			}
 		}
 	}
 

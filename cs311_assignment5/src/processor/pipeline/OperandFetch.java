@@ -19,114 +19,157 @@ public class OperandFetch {
 	public void performOF()
 	{
 		boolean isSafe = false;
-		if(IF_OF_Latch.isOF_enable())
+		if(IF_OF_Latch.isOF_enable() && IF_OF_Latch.isCurrentDataValid && !IF_OF_Latch.dropThisIns)
 		{
-			//TODO
-			int r1 = 0;
-			int rI2 = 0;
-			int rd = 0;
-			boolean isImmediate = false;
-			int instruction = IF_OF_Latch.getInstruction();
-			int opcode = getOpcode(IF_OF_Latch.getInstruction());
-			int operationType = getOperationType(opcode);  // 1,2,3  values are possible
-			int pc = IF_OF_Latch.pc;
-			boolean pastEncounteredBubble = IF_OF_Latch.pastEncounteredBubble;
+
+			if(!OF_EX_Latch.isEXBusy){
+				///
+				int r1 = 0;
+				int rI2 = 0;
+				int rd = 0;
+				boolean isImmediate = false;
+				int instruction = IF_OF_Latch.getInstruction();
+				int opcode = getOpcode(IF_OF_Latch.getInstruction());
+				int operationType = getOperationType(opcode);  // 1,2,3  values are possible
+				int pc = IF_OF_Latch.pc;
+				boolean pastEncounteredBubble = IF_OF_Latch.pastEncounteredBubble;
 
 
-			if(operationType == 1){
-				containingProcessor.disableOF();
-				isSafe = true;
-				if(opcode == 29){
-					isImmediate = false;
-					r1 = 0;
-					rI2 = 0;
-					rd = 0;
-				}else{
-					int tempInt = getSubIntValFromInt(instruction, 5, 10);
-					long tempLong = 0;
-					if(tempInt == 0){
-						tempLong = getSubLongValFromInt(instruction, 11, 32);
-						if(tempLong == 0){
-							System.out.println("Error in OperandFetch type RI (Both rd and imm are zero): Instruction - " + instruction);
-						}else{
-							isImmediate = true;
-							rI2 = (int)tempLong;
-							r1 = 0;
-							rd = 0;
-						}
-					}else{
-						rd = containingProcessor.getRegisterFile().getValue(tempInt);
+				if(operationType == 1){
+					containingProcessor.disableOF();
+					isSafe = true;
+					if(opcode == 29){
 						isImmediate = false;
 						r1 = 0;
 						rI2 = 0;
+						rd = 0;
+					}else{
+						int tempInt = getSubIntValFromInt(instruction, 5, 10);
+						long tempLong = 0;
+						if(tempInt == 0){
+							tempLong = getSubLongValFromInt(instruction, 11, 32);
+							if(tempLong == 0){
+								System.out.println("Error in OperandFetch type RI (Both rd and imm are zero): Instruction - " + instruction);
+							}else{
+								isImmediate = true;
+								rI2 = (int)tempLong;
+								r1 = 0;
+								rd = 0;
+							}
+						}else{
+							rd = containingProcessor.getRegisterFile().getValue(tempInt);
+							isImmediate = false;
+							r1 = 0;
+							rI2 = 0;
+						}
+					}
+
+				}
+				else if(operationType == 2){
+					isImmediate = true;
+					r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
+					rd = getSubIntValFromInt(instruction, 10, 15);
+					rI2 = (int)getSubLongValFromInt(instruction, 15, 32);
+
+					if(opcode >24 && opcode <29){
+						if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))
+								&& !containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 10, 15)))){
+							isSafe = true;
+						}else{
+							isSafe = false;
+						}
+					}
+					else{
+						if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))){
+							isSafe = true;
+							if(opcode != 23){
+								containingProcessor.getInUse().add(String.valueOf(rd));
+							}
+						}else{
+							isSafe = false;
+						}
 					}
 				}
-
-			}
-			else if(operationType == 2){
-				isImmediate = true;
-				r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
-				rd = getSubIntValFromInt(instruction, 10, 15);
-				rI2 = (int)getSubLongValFromInt(instruction, 15, 32);
-
-				if(opcode >24 && opcode <29){
+				else if(operationType == 3){
+					isImmediate = false;
+					r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
+					rI2 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 10, 15));
+					rd = getSubIntValFromInt(instruction, 15, 20);
 					if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))
 							&& !containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 10, 15)))){
 						isSafe = true;
+						containingProcessor.getInUse().add(String.valueOf(rd));
 					}else{
 						isSafe = false;
 					}
+				}
+				///
+
+				if(OF_EX_Latch.isCurrentDataValid){
+					System.out.println("Error in OF : Failed sync between busy and data validity");
+				}
+
+				OF_EX_Latch.aluSignal = opcode;
+				OF_EX_Latch.isImmediate = isImmediate;
+				OF_EX_Latch.r1 = r1;
+				OF_EX_Latch.ri2 = rI2;
+				OF_EX_Latch.rd = rd;
+				OF_EX_Latch.pc = pc;
+				OF_EX_Latch.isCurrentDataValid = true;
+
+				if(isSafe){
+					IF_OF_Latch.isOFBusy = false;
+					OF_EX_Latch.inBubble = false;
+					IF_OF_Latch.isCurrentDataValid = false;
+					IF_OF_Latch.pastEncounteredBubble = false;
+				}else{
+					IF_OF_Latch.isOFBusy = true;
+					OF_EX_Latch.inBubble = true;
+					IF_OF_Latch.isCurrentDataValid = true;
+					IF_OF_Latch.pastEncounteredBubble = true;
+
+					Statistics.incrementOFhalt();
+				}
+
+			}else{
+				IF_OF_Latch.isOFBusy = true;
+				IF_OF_Latch.isCurrentDataValid = true;
+
+				if(isSafe){
+					IF_OF_Latch.pastEncounteredBubble = false;
 				}
 				else{
-					if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))){
-						isSafe = true;
-						if(opcode != 23){
-							containingProcessor.getInUse().add(String.valueOf(rd));
-						}
-					}else{
-						isSafe = false;
-					}
+					IF_OF_Latch.pastEncounteredBubble = true;
 				}
 			}
-			else if(operationType == 3){
-				isImmediate = false;
-				r1 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 5, 10));
-				rI2 = containingProcessor.getRegisterFile().getValue(getSubIntValFromInt(instruction, 10, 15));
-				rd = getSubIntValFromInt(instruction, 15, 20);
-				if(!containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 5, 10)))
-						&& !containingProcessor.getInUse().contains(String.valueOf(getSubIntValFromInt(instruction, 10, 15)))){
-					isSafe = true;
-					containingProcessor.getInUse().add(String.valueOf(rd));
-				}else{
-					isSafe = false;
-				}
-			}
-			OF_EX_Latch.aluSignal = opcode;
-			OF_EX_Latch.isImmediate = isImmediate;
-			OF_EX_Latch.r1 = r1;
-			OF_EX_Latch.ri2 = rI2;
-			OF_EX_Latch.rd = rd;
-			OF_EX_Latch.pc = pc;
 
 
+/*			if(isSafe){
+//				containingProcessor.enableIF();
+//				IF_OF_Latch.setOF_enable(true);
 
-			if(isSafe){
-				containingProcessor.enableIF();
-				IF_OF_Latch.setOF_enable(true);
-				IF_OF_Latch.pastEncounteredBubble = false;
 
-				OF_EX_Latch.setEX_enable(true);
-				OF_EX_Latch.inBubble = false;
+//				OF_EX_Latch.setEX_enable(true);
+
+				IF_OF_Latch.isOFBusy = false;
 			}
 			else{
-				Statistics.incrementOFhalt();
-				containingProcessor.disableIF();
-				IF_OF_Latch.setOF_enable(true);
+//				Statistics.incrementOFhalt();
+//				containingProcessor.disableIF();
+//				IF_OF_Latch.setOF_enable(true);
 				IF_OF_Latch.pastEncounteredBubble = true;
 
-				OF_EX_Latch.setEX_enable(false);
+//				OF_EX_Latch.setEX_enable(false);
 				OF_EX_Latch.inBubble = true;
-			}
+				IF_OF_Latch.isOFBusy = true;
+			}*/
+		}else if(IF_OF_Latch.dropThisIns && IF_OF_Latch.isCurrentDataValid){
+			IF_OF_Latch.dropThisIns = false;
+
+			IF_OF_Latch.isCurrentDataValid = false;
+			IF_OF_Latch.isOFBusy = false;
+			OF_EX_Latch.inBubble = true;
+			IF_OF_Latch.pastEncounteredBubble = false;
 		}
 	}
 

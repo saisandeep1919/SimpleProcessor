@@ -11,16 +11,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Simulator {
-		
+
 	static Processor processor;
 	static boolean simulationComplete;
 	static int endPC;
-	
+	static EventQueue eventQueue = new EventQueue();
+
 	public static void setupSimulation(String assemblyProgramFile, Processor p)
 	{
 		Simulator.processor = p;
 		loadProgram(assemblyProgramFile);
-		
+
 		simulationComplete = false;
 	}
 
@@ -71,7 +72,7 @@ public class Simulator {
 		System.out.println();
 
 	}
-	
+
 	public static void simulate()
 	{
 		Statistics.setNumberOfCycles(0);
@@ -117,46 +118,83 @@ public class Simulator {
 			Statistics.printStatistics(); //Automatically updates the number of instructions
 			*/
 
-			Statistics.incrementCycles();
+//	prev stat		Statistics.incrementCycles();
 //			System.out.println(processor.getRegisterFile().getProgramCounter());
 //			pc = processor.getRegisterFile().getProgramCounter() ;
 //			insInt = processor.getMainMemory().getWord(pc);
 //			insString = Integer.toBinaryString(insInt);
 //			cycle = Statistics.numberOfCycles;
 //			Statistics.newStatHolder(pc, insInt, insString, cycle);
-			processor.getRWUnit().performRW();
-			Clock.incrementClock();
+//			processor.getRWUnit().performRW();
+//			Clock.incrementClock();
 //			Statistics.newAddOperation("RW", (int)Clock.getCurrentTime());
 
-			processor.getMAUnit().performMA();
-			Clock.incrementClock();
+//			processor.getMAUnit().performMA();
+//			Clock.incrementClock();
 //			Statistics.newAddOperation("MA", (int)Clock.getCurrentTime());
 
-			processor.getEXUnit().performEX();
-			Clock.incrementClock();
+//			processor.getEXUnit().performEX();
+//			Clock.incrementClock();
 //			Statistics.newAddOperation("EX", (int)Clock.getCurrentTime());
 
-			processor.getOFUnit().performOF();
-			Clock.incrementClock();
+//			processor.getOFUnit().performOF();
+//			Clock.incrementClock();
 //			Statistics.newAddOperation("OF", (int)Clock.getCurrentTime());
 
-			processor.getIFUnit().performIF();
-			Clock.incrementClock();
+//			processor.getIFUnit().performIF();
+//			Clock.incrementClock();
 //			Statistics.newAddOperation("IF", (int)Clock.getCurrentTime());
 
 //			Statistics.addRegString(processor.getRegisterFile().getContentsAsMyString());
 //			Statistics.newUploadStatHolder();
 //			Statistics.printStatistics(); //Automatically updates the number of instructions
 
+//			if(simulationComplete){
+//				processor.getRegisterFile().setProgramCounter(endPC);
+//			}
+
+
+			Statistics.incrementCycles();
+
+
+			processor.getRWUnit().performRW();
+			processor.getMAUnit().performMA();
+			processor.getEXUnit().performEX();
+			eventQueue.processEvents();
+			processor.getOFUnit().performOF();
+			processor.getIFUnit().performIF();
+			Clock.incrementClock();
+
+
 			if(simulationComplete){
 				processor.getRegisterFile().setProgramCounter(endPC);
 			}
 		}
-		
+
+		/*
+		Classic Functions
+
+		processor.getRWUnit().performRW();
+		Clock.incrementClock();
+
+		processor.getMAUnit().performMA();
+		Clock.incrementClock();
+
+		processor.getEXUnit().performEX();
+		Clock.incrementClock();
+
+		processor.getOFUnit().performOF();
+		Clock.incrementClock();
+
+		processor.getIFUnit().performIF();
+		Clock.incrementClock();
+
+		*/
+
 
 
 	}
-	
+
 	public static void setSimulationComplete(boolean value)
 	{
 		simulationComplete = value;
@@ -164,5 +202,9 @@ public class Simulator {
 
 	public static void setEndPC(int epc){
 		endPC = epc;
+	}
+
+	public static EventQueue getEventQueue(){
+		return eventQueue;
 	}
 }

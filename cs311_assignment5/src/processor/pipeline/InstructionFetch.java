@@ -1,9 +1,10 @@
 package processor.pipeline;
 
-import generic.Statistics;
+import generic.*;
+import processor.Clock;
 import processor.Processor;
 
-public class InstructionFetch {
+public class InstructionFetch implements Element {
 	
 	Processor containingProcessor;
 	IF_EnableLatchType IF_EnableLatch;
@@ -20,25 +21,50 @@ public class InstructionFetch {
 	
 	public void performIF()
 	{
-		if(IF_EnableLatch.isIF_enable())
+		if(IF_EnableLatch.isIF_enable() && !IF_EnableLatch.isIFWaiting)
 		{
 			if(!IF_EnableLatch.isEndEncountered){
 				Statistics.incrementInstructions();
 			}
+			int pc = 0;
 			if(EX_IF_Latch.isBranchTaken){
-				int newInstruction = containingProcessor.getMainMemory().getWord(EX_IF_Latch.newPC);
-				IF_OF_Latch.setInstruction(newInstruction);
-				containingProcessor.getRegisterFile().setProgramCounter(EX_IF_Latch.newPC + 1);
+				pc = EX_IF_Latch.newPC;
 				EX_IF_Latch.isBranchTaken = false;
 			}else{
-				int currentPC = containingProcessor.getRegisterFile().getProgramCounter();
-				int newInstruction = containingProcessor.getMainMemory().getWord(currentPC);
-				IF_OF_Latch.setInstruction(newInstruction);
-				containingProcessor.getRegisterFile().setProgramCounter(currentPC + 1);
+				pc = containingProcessor.getRegisterFile().getProgramCounter();
 			}
-			IF_EnableLatch.setIF_enable(false);
-			IF_OF_Latch.setOF_enable(true);
-			IF_OF_Latch.pc = containingProcessor.getRegisterFile().getProgramCounter() - 1;
+//			IF_EnableLatch.setIF_enable(false);
+//			IF_OF_Latch.setOF_enable(true);
+			IF_EnableLatch.currentPC = pc;
+			MemoryReadEvent memoryReadEvent = new MemoryReadEvent(Clock.getCurrentTime(), this,
+					containingProcessor.getMainMemory(), pc);
+			Simulator.getEventQueue().addEvent(memoryReadEvent);
+			IF_EnableLatch.isIFWaiting = true;
+		}
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		if(event.getEventType() == Event.EventType.MemoryResponse){
+			if(!IF_OF_Latch.isOFBusy){
+				if(IF_OF_Latch.isCurrentDataValid){
+					System.out.println("Error in IF : Failed sync between busy and data validity");
+				}
+
+				int newIns = ((MemoryResponseEvent)event).getValue();
+				IF_OF_Latch.setInstruction(newIns);
+				containingProcessor.getRegisterFile().setProgramCounter(IF_EnableLatch.currentPC + 1);
+				IF_OF_Latch.pc = IF_EnableLatch.currentPC;
+				IF_OF_Latch.isCurrentDataValid = true;
+
+				IF_EnableLatch.isIFWaiting = false;
+			}else{
+				event.setEventTime(event.getEventTime() + 1);
+				Simulator.getEventQueue().addEvent(event);
+				IF_EnableLatch.isIFWaiting = true;
+			}
+		}else{
+			System.out.println("Wrong event type in Ins Fetch");
 		}
 	}
 
@@ -53,5 +79,7 @@ public class InstructionFetch {
 		return ans;
 	}
 	*/
+
+
 
 }
