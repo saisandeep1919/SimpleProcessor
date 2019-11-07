@@ -1,22 +1,10 @@
 package processor;
 
+import generic.Statistics;
 import processor.memorysystem.MainMemory;
-import processor.pipeline.EX_IF_LatchType;
-import processor.pipeline.EX_MA_LatchType;
-import processor.pipeline.Execute;
-import processor.pipeline.IF_EnableLatchType;
-import processor.pipeline.IF_OF_LatchType;
-import processor.pipeline.InstructionFetch;
-import processor.pipeline.MA_RW_LatchType;
-import processor.pipeline.MemoryAccess;
-import processor.pipeline.OF_EX_LatchType;
-import processor.pipeline.OperandFetch;
-import processor.pipeline.RegisterFile;
-import processor.pipeline.RegisterWrite;
+import processor.pipeline.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Processor {
 	
@@ -37,6 +25,7 @@ public class Processor {
 	RegisterWrite RWUnit;
 
 	ArrayList<String> inUse = new ArrayList<String>();
+	boolean isEndEncountered = false;
 
 	
 	public Processor()
@@ -58,6 +47,20 @@ public class Processor {
 		RWUnit = new RegisterWrite(this, MA_RW_Latch, IF_EnableLatch);
 
 
+	}
+
+	public void setIsEndEncountered(boolean b){
+		isEndEncountered = b;
+	}
+
+	public void disableInsCount(){
+		if(!isEndEncountered){
+			IF_EnableLatch.setEndEncountered(true);
+			if(!IF_OF_Latch.getPastEncounteredBubble()){
+//			System.out.println("gotting inasdf " + inpc);
+				Statistics.decrementInstructinos();
+			}
+		}
 	}
 
 	public ArrayList<String> getInUse(){

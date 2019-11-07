@@ -22,7 +22,9 @@ public class InstructionFetch {
 	{
 		if(IF_EnableLatch.isIF_enable())
 		{
-			Statistics.incrementInstructions();
+			if(!IF_EnableLatch.isEndEncountered){
+				Statistics.incrementInstructions();
+			}
 			if(EX_IF_Latch.isBranchTaken){
 				int newInstruction = containingProcessor.getMainMemory().getWord(EX_IF_Latch.newPC);
 				IF_OF_Latch.setInstruction(newInstruction);
@@ -39,5 +41,17 @@ public class InstructionFetch {
 			IF_OF_Latch.pc = containingProcessor.getRegisterFile().getProgramCounter() - 1;
 		}
 	}
+
+	/*
+
+	public boolean checkForEnd(int ins){
+		boolean ans = false;
+		int opcode = OperandFetch.getOpcode(ins);
+		if(opcode == 29){
+			ans = true;
+		}
+		return ans;
+	}
+	*/
 
 }

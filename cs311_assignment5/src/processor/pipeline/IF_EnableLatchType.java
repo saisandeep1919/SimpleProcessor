@@ -3,6 +3,7 @@ package processor.pipeline;
 public class IF_EnableLatchType {
 	
 	boolean IF_enable;
+	boolean isEndEncountered = false;
 	
 	public IF_EnableLatchType()
 	{
@@ -15,6 +16,10 @@ public class IF_EnableLatchType {
 
 	public void setIF_enable(boolean iF_enable) {
 		IF_enable = iF_enable;
+	}
+
+	public void setEndEncountered(boolean b){
+		isEndEncountered = b;
 	}
 
 }

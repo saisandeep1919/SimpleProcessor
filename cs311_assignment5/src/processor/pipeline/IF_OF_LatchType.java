@@ -28,4 +28,8 @@ public class IF_OF_LatchType {
 		this.instruction = instruction;
 	}
 
+	public boolean getPastEncounteredBubble(){
+		return pastEncounteredBubble;
+	}
+
 }

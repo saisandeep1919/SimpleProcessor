@@ -204,7 +204,7 @@ public class OperandFetch {
 		return ans;
 	}
 
-	public int getOpcode(int instruction) {
+	public static int getOpcode(int instruction) {
 		int ans = 0;
 		String insString = Integer.toBinaryString(instruction);
 		insString = addBinaryPrefix(32, insString);

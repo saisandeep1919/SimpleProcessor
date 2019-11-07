@@ -1,6 +1,5 @@
 package processor.pipeline;
 
-import generic.Simulator;
 import generic.Statistics;
 import processor.Processor;
 
@@ -362,6 +361,11 @@ public class Execute {
 
 
 			//preparing Memory access latch
+
+			if(isEnd){
+				containingProcessor.disableInsCount();
+				containingProcessor.setIsEndEncountered(true);
+			}
 
 			EX_MA_Latch.setMA_enable(true);
 			EX_MA_Latch.aluResult = aluResult;
